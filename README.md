@@ -1,3 +1,5 @@
+[![pages-build-deployment](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/pages/pages-build-deployment)
+
 This is a Python package that auto-patches tf.keras.Model.fit() to log training metrics automatically, with zero changes to your code workflow.
 
 ## Why?
