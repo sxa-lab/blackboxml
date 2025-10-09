@@ -1,5 +1,5 @@
-# blackboxml [![Deployment](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/pages/pages-build-deployment) [![PyPI version](https://badge.fury.io/py/blackboxml.svg)](https://badge.fury.io/py/blackboxml) [![Python Version](https://img.shields.io/pypi/pyversions/blackboxml.svg)](https://pypi.org/project/blackboxml/) [![Downloads](https://static.pepy.tech/badge/blackboxml)](https://pepy.tech/project/blackboxml) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE)
-[![CI/CD](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/publish.yml/badge.svg)](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/publish.yml)
+# blackboxml [![PyPI version](https://badge.fury.io/py/blackboxml.svg)](https://badge.fury.io/py/blackboxml) [![Python Version](https://img.shields.io/pypi/pyversions/blackboxml.svg)](https://pypi.org/project/blackboxml/) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE) [![Downloads](https://static.pepy.tech/badge/blackboxml)](https://pepy.tech/project/blackboxml)
+[![Deployment](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/pages/pages-build-deployment)
 
 
 This is a Python package that auto-patches tf.keras.Model.fit() to log training metrics automatically, with zero changes to your code workflow.
@@ -63,7 +63,7 @@ pip install blackboxml
 
 ### Preview
 
-![Installation Preview](./data/blackboxml_installation.png)
+![Installation Preview](data/blackboxml_installation.png)
 
 And now you are all set! 
 
