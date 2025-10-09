@@ -3,31 +3,40 @@ name: Publish Python Package
 on:
   push:
     tags:
-      - 'v*'  #trigger when we push tags like v1.0.0, v0.2.1 
+      - 'v*'  # Trigger when we push tags like v1.0.0, v0.2.1
+  release:
+    types: [published]
+  workflow_dispatch:  # Allow manual trigger
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     environment: release
     permissions:
-      id-token: write 
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install build
+          pip install build twine
 
       - name: Build package
         run: python -m build
 
+      - name: Check package
+        run: twine check dist/*
+
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true
