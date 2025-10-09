@@ -1,12 +1,12 @@
 # blackboxml [![PyPI version](https://badge.fury.io/py/blackboxml.svg)](https://badge.fury.io/py/blackboxml) [![Python Version](https://img.shields.io/pypi/pyversions/blackboxml.svg)](https://pypi.org/project/blackboxml/) [![Deployment](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/pages/pages-build-deployment) [![Downloads](https://static.pepy.tech/badge/blackboxml)](https://pepy.tech/project/blackboxml)
 
 
-This is a Python package that auto-patches tf.keras.Model.fit() to log training metrics automatically, with zero changes to your code workflow.
+The official repository of [blackboxml](https://stuartasiimwe7.github.io/blackboxml/) 
 
 ## Why?
 We have all been there - Training deep learning models can be time-consuming and resource-intensive. And it's all too common to run a lengthy experiment, only to realize afterward that essential training or validation metrics were not logged, making it difficult to analyze or reproduce results.
 
-**BlackBoxML** eliminates this problem by automatically capturing and saving all relevant training metrics—without requiring any changes to your workflow. Whether you're developing CNNs, Transformers, or experimental architectures, BlackBoxML ensures your training history is always preserved and accessible.
+**blackboxml** eliminates this problem by automatically capturing and saving all relevant training metrics—without requiring any changes to your workflow. Whether you're developing CNNs, Transformers, or experimental architectures, BlackBoxML ensures your training history is always preserved and accessible.
 
 - No setup overhead
 - No risk of missing critical logs
