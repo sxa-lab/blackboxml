@@ -59,6 +59,10 @@ Once the virtual environment is activated, install the package using pip:
 pip install blackboxml
 ```
 
+### Preview
+
+![Installation Preview](./data/blackboxml_installation.png)
+
 And now you are all set! 
 
 ## How It Works
