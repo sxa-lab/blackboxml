@@ -1,6 +1,6 @@
 # Reporting Security Vulnerabilities
 
-At **BlackBoxML**, we take security seriously. If you discover any security vulnerabilities in our project, please report them responsibly so we can address them promptly.
+We take security seriously. If you discover any security vulnerabilities in our project, please report them responsibly so we can address them promptly.
 
 ## **How to Report a Vulnerability**
 
