@@ -1,4 +1,4 @@
-# blackboxml [![PyPI version](https://badge.fury.io/py/blackboxml.svg)](https://badge.fury.io/py/blackboxml) [![Python Version](https://img.shields.io/pypi/pyversions/blackboxml.svg)](https://pypi.org/project/blackboxml/) [![Deployment](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/pages/pages-build-deployment) [![Downloads](https://static.pepy.tech/badge/blackboxml)](https://pepy.tech/project/blackboxml)
+[![PyPI version](https://badge.fury.io/py/blackboxml.svg)](https://badge.fury.io/py/blackboxml) [![Python Version](https://img.shields.io/pypi/pyversions/blackboxml.svg)](https://pypi.org/project/blackboxml/) [![Deployment](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/pages/pages-build-deployment) [![Downloads](https://static.pepy.tech/badge/blackboxml)](https://pepy.tech/project/blackboxml)
 
 
 The official repository of [blackboxml](https://stuartasiimwe7.github.io/blackboxml/) 
@@ -62,13 +62,13 @@ pip install blackboxml
 
 ### Preview
 
-![ ](./data/blackboxml_installation.png)
+![details](data/blackboxml_installation.png)
 
 And now you are all set! 
 
 ## How It Works
 
-BlackBoxML integrates seamlessly into your workflow by patching `model.fit()` to log metrics automatically. Here's how you can use it:
+blackboxml integrates seamlessly into your workflow by patching `model.fit()` to log metrics automatically. Here's how you can use it:
 
 ### Basic Usage
 
