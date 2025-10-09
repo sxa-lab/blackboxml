@@ -63,7 +63,7 @@ pip install blackboxml
 
 ### Preview
 
-![Installation Preview](data/blackboxml_installation.png)
+![ ](./data/blackboxml_installation.png)
 
 And now you are all set! 
 
