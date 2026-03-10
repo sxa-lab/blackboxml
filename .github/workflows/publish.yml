@@ -1,14 +1,28 @@
-name: Publish Python Package
+name: Publish to PyPI
 
 on:
   push:
     tags:
-      - 'v*'  # Trigger when we push tags like v1.0.0, v0.2.1
-  release:
-    types: [published]
+      - 'v*'
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install and test
+        run: |
+          pip install -e .
+          pip install pytest
+          pytest tests/ -v
+
   publish:
+    needs: test
     runs-on: ubuntu-latest
     environment: release
     permissions:
@@ -16,26 +30,19 @@ jobs:
       contents: read
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.12'
 
-      - name: Install dependencies
+      - name: Build
         run: |
-          python -m pip install --upgrade pip
           pip install build twine
+          python -m build
+          twine check dist/*
 
-      - name: Build package
-        run: python -m build
-
-      - name: Check package
-        run: twine check dist/*
-
-      - name: Publish package to PyPI
+      - name: Publish
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           skip-existing: true
