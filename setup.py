@@ -5,7 +5,7 @@ setup(
     version='0.5.0',
     author='Stuart Asiimwe',
     author_email='stuartgabriel@ymail.com',
-    description='Lightweight, framework-agnostic ML experiment tracker.',
+    description='ML experiment tracking. Local, lightweight, framework-agnostic.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url='https://github.com/stuartasiimwe7/blackboxml',

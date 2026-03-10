@@ -2,7 +2,7 @@
 
 # blackboxml
 
-ML experiment tracking without the infrastructure. Log metrics from any training loop to local JSON, inspect runs from the CLI.
+ML experiment tracking. Local, lightweight, framework-agnostic.
 
 Works with PyTorch, Keras, scikit-learn, or plain Python.
 
