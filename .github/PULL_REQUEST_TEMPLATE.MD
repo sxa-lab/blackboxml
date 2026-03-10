@@ -1,33 +1,25 @@
-# Pull Request
-
 ## Description
-Clearly explain what this PR does.
+
+What does this PR do?
 
 - [ ] Bug fix
 - [ ] New feature
-- [ ] Documentation update
-- [ ] Other (please describe):
+- [ ] Documentation
+- [ ] Other:
 
 ## Related Issues
-Link any related issues:
-- Closes #123
-- Fixes #456
+
+- Closes #
+- Fixes #
 
 ## Changes
-List major changes:
-- Added [...]
-- Updated [...]
-- Removed [...]
+
+-
+-
+-
 
 ## Checklist
-- [ ] I have tested the code thoroughly.
-- [ ] I have updated documentation where applicable.
-- [ ] I have added necessary unit tests or explained why they are not needed.
-- [ ] My code follows the code style and guidelines of this project.
-- [ ] I have mentioned reviewers who should see this.
 
-## Screenshots (if applicable)
-Paste images, screenshots, logs, etc.
-
----
-Remember: Great PRs → Great Projects. Thanks for leveling up **blackboxml**!
+- [ ] Tests pass (`pytest tests/ -v`)
+- [ ] Code follows PEP 8 with type hints on public APIs
+- [ ] Documentation updated if needed

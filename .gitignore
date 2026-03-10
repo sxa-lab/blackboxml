@@ -153,3 +153,8 @@ blackboxml_logs/
 blackbox_logs/*.jsons
 #plots
 plots/
+
+#claude
+.claude/
+CLAUDE.md
+PLAN.md

@@ -1,157 +1,118 @@
-[![PyPI version](https://badge.fury.io/py/blackboxml.svg)](https://badge.fury.io/py/blackboxml) [![Python Version](https://img.shields.io/pypi/pyversions/blackboxml.svg)](https://pypi.org/project/blackboxml/) [![Deployment](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/pages/pages-build-deployment) [![Downloads](https://static.pepy.tech/badge/blackboxml)](https://pepy.tech/project/blackboxml)
+[![PyPI version](https://badge.fury.io/py/blackboxml.svg)](https://badge.fury.io/py/blackboxml) [![Python Version](https://img.shields.io/pypi/pyversions/blackboxml.svg)](https://pypi.org/project/blackboxml/) [![Tests](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/test.yml/badge.svg)](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/test.yml) [![Downloads](https://static.pepy.tech/badge/blackboxml)](https://pepy.tech/project/blackboxml)
 
+# blackboxml
 
-The official repository of [blackboxml](https://stuartasiimwe7.github.io/blackboxml/) 
+ML experiment tracking without the infrastructure. Log metrics from any training loop to local JSON, inspect runs from the CLI.
 
-## Why?
-We have all been there - Training deep learning models can be time-consuming and resource-intensive. And it's all too common to run a lengthy experiment, only to realize afterward that essential training or validation metrics were not logged, making it difficult to analyze or reproduce results.
+Works with PyTorch, Keras, scikit-learn, or plain Python.
 
-**blackboxml** eliminates this problem by automatically capturing and saving all relevant training metrics—without requiring any changes to your workflow. Whether you're developing CNNs, Transformers, or experimental architectures, BlackBoxML ensures your training history is always preserved and accessible.
-
-- No setup overhead
-- No risk of missing critical logs
-- Seamless integration: just import and go
-
-You can focus on research and model development, confident that your experiment data is always safe and ready for analysis.
-
-## Project Structure
-
-```
-blackboxml/
-├── blackboxml/
-│   ├── __init__.py
-│   ├── autopilot.py
-│   ├── visualiser.py
-├── setup.py
-├── README.md
-├── CHANGELOG.md
-├── LICENSE
-```
-
-## Installation
-
-Follow the steps below to set up your environment and install the package in order to get started:
-
-### Step 1: Create a Virtual Environment
-
-It is recommended to use a virtual environment to manage dependencies.
-
-```bash
-python -m venv venv
-```
-
-### Step 2: Activate the Virtual Environment
-
-#### On Windows:
-```bash
-venv\Scripts\activate
-```
-
-#### On macOS/Linux:
-```bash
-source venv/bin/activate
-```
-
-### Step 3: Install BlackBoxML
-
-Once the virtual environment is activated, install the package using pip:
+## Install
 
 ```bash
 pip install blackboxml
+pip install blackboxml[keras]  # optional TensorFlow support
 ```
 
-### Preview
+## Usage
 
-![details](data/blackboxml_installation.png)
-
-And now you are all set! 
-
-## How It Works
-
-blackboxml integrates seamlessly into your workflow by patching `model.fit()` to log metrics automatically. Here's how you can use it:
-
-### Basic Usage
+### `@track` decorator
 
 ```python
-from blackboxml import autopilot
-import tensorflow as tf
+from blackboxml import track, MetricStore
 
-# Patch model.fit() once
-autopilot()
+@track(name="resnet_cifar10", tags=["pytorch", "cifar10"])
+def train():
+    metrics = MetricStore()
+    for epoch in range(10):
+        metrics.reset()
+        for batch in dataloader:
+            loss, acc = train_step(batch)
+            metrics.update({"loss": loss, "acc": acc}, n=len(batch))
+        yield metrics.compute()
 
-# Build your model as usual
-model = tf.keras.Sequential([...])
-
-model.compile(...)
-model.fit(...)  # Metrics are logged automatically
+train()
 ```
 
-### Advanced Usage with Experiment Tracking
-
-For more advanced tracking, you can specify experiment names and tags:
+### `Run` context manager
 
 ```python
-from blackboxml import autopilot
+from blackboxml import Run
 
-# Use autopilot with experiment details
-with autopilot("mnist_cnn", tags=["keras", "cnn", "mnist"]) as tracker:
-    model.fit(..., callbacks=[tracker.get_keras_callback()])
+with Run(name="resnet_cifar10", tags=["pytorch"]) as run:
+    for epoch in range(10):
+        run.log({"loss": train_one_epoch(), "epoch": epoch})
 ```
 
-This approach allows you to organize and tag your experiments for better tracking and analysis.
-
-### Visualizing Metrics
-
-After training, you can visualize the logged metrics using the `visualiser` module:
+### Keras callback
 
 ```python
-from blackboxml.visualiser import visualise_metrics
+from blackboxml.callback import BlackBoxCallback
 
-# Visualize after training
-visualise_metrics("blackboxml_logs/metrics_20250424_221132.json")
+model.fit(x_train, y_train, epochs=10,
+          callbacks=[BlackBoxCallback(name="lstm_nlp", tags=["keras"])])
 ```
 
-This will generate plots for training and validation metrics, helping you analyze your model's performance effortlessly.
-
-## Output
-
-After training your model, **BlackBoxML** will automatically generate a log file containing all the recorded metrics. Here's an example of the output directory structure:
+## CLI
 
 ```
-blackboxml_logs/
-└── metrics_YYYYMMDD_HHMMSS.json
+$ bbml runs
+NAME              DATE                 DURATION  STEPS  TAGS
+----------------------------------------------------------------
+resnet_cifar10    2026-03-10 14:22:01    13m 46s     10  pytorch, cifar10
+lstm_nlp          2026-03-10 11:05:33     4m 12s      5  keras
+
+$ bbml show resnet_cifar10
+$ bbml clean
 ```
 
-Each log file is timestamped for easy identification and contains metrics such as training loss, validation loss, accuracy, and any other metrics tracked during training.
-### Sample Metrics File
+## What gets logged
+
+Each run saves to `blackboxml_logs/<name>_<timestamp>/run.json`:
 
 ```json
 {
-    "accuracy": [0.95, 0.98],
-    "loss": [0.1, 0.05],
-    "val_accuracy": [0.96, 0.97],
-    "val_loss": [0.08, 0.06]
+  "name": "resnet_cifar10",
+  "tags": ["pytorch", "cifar10"],
+  "environment": {
+    "git_commit": "a3f91bc",
+    "git_dirty": false,
+    "python": "3.11.2",
+    "torch": "2.3.0",
+    "hostname": "lab-gpu-01"
+  },
+  "start": "2026-03-10T14:22:01",
+  "end": "2026-03-10T14:35:47",
+  "duration_seconds": 826,
+  "steps": [
+    {"loss": 0.842, "acc": 0.65},
+    {"loss": 0.671, "acc": 0.78}
+  ]
 }
 ```
 
+Git commit, Python version, framework versions, and hostname are captured automatically.
+
+## Releases
+
+| Version | Date | What changed |
+|---------|------|-------------|
+| [0.1.0](https://pypi.org/project/blackboxml/0.1.0/) | Apr 2025 | Initial release — Keras auto-logging, `visualise_metrics` |
+| [0.2.0](https://pypi.org/project/blackboxml/0.2.0/) | Jul 2025 | Type hints, logging module, error handling |
+| **0.5.0** | Mar 2026 | Framework-agnostic rewrite — `@track`, `Run`, `MetricStore`, `bbml` CLI |
+
 ## Contributing
 
-We welcome contributions of all kinds! Whether it's reporting a bug, suggesting a feature, improving documentation, or submitting a pull request, your help is greatly appreciated. 
+See [Contributing Guidelines](./.github/CONTRIBUTING.MD) to get started. Bug reports, feature requests, and pull requests are welcome.
 
-Please see our [Contributing Guidelines](./.github/CONTRIBUTING.MD) for more information on how to get started. Together, we can make **BlackBoxML** even better!
-
-To report a bug, please use our [Bug Report Template](./.github/ISSUE_TEMPLATE/bug_report.md). This will help us address issues more efficiently.
-
-To suggest a new feature or enhancement, please use our [Feature Request Template](./.github/ISSUE_TEMPLATE/feature_request.md). Your ideas and feedback are invaluable in improving **BlackBoxML**.
-
-We take security seriously and strive to ensure that **BlackBoxML** is safe to use. If you discover any security vulnerabilities or have concerns, please report them to us immediately by creating an issue or contacting us directly. For more details, refer to our [Security Policy](./.github/SECURITY.MD).
-
-We are committed to fostering an open and welcoming environment for everyone. By participating in this project, you agree to abide by our [Code of Conduct](./.github/CODE_OF_CONDUCT.MD). Please read it to understand the standards we expect from our community members.
+- [Bug reports](./.github/ISSUE_TEMPLATE/bug_report.md)
+- [Feature requests](./.github/ISSUE_TEMPLATE/feature_request.md)
+- [Security policy](./.github/SECURITY.MD)
+- [Code of conduct](./.github/CODE_OF_CONDUCT.MD)
 
 ## License
 
-This project is licensed under the Apache License 2.0. You are free to use, modify, and distribute this software, provided that you comply with the terms of the license. For more details, see the [LICENSE](./LICENSE) file.
+[Apache License 2.0](./LICENSE)
 
 ## Author
 
-Built by [Stuart Asiimwe](https://www.linkedin.com/in/stuartasiimwe/)
+[Stuart Asiimwe](https://github.com/stuartasiimwe7)

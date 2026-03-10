@@ -1,51 +1,42 @@
-from blackboxml import autopilot, Tracker
-import tensorflow as tf
-from tensorflow.keras.models import Sequential  # type: ignore
-from tensorflow.keras.layers import Dense, Flatten, Conv2D, MaxPooling2D  # type: ignore
-from tensorflow.keras.datasets import mnist  # type: ignore
-from tensorflow.keras.utils import to_categorical  # type: ignore
-from blackboxml.visualiser import visualise_metrics
+"""Example usage of blackboxml v0.5.0 — framework-agnostic experiment tracking."""
 
-#Patch model.fit() (optional if autopilot() is auto-run in __init__.py)
-autopilot()
+import random
+from blackboxml import track, Run, MetricStore
 
-#load the MNIST dataset
-(x_train, y_train), (x_test, y_test) = mnist.load_data()
-x_train = x_train.reshape(-1, 28, 28, 1).astype('float32') / 255
-x_test = x_test.reshape(-1, 28, 28, 1).astype('float32') / 255
-y_train = to_categorical(y_train)
-y_test = to_categorical(y_test)
 
-#define our CNN model
-model = Sequential([
-    Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(28, 28, 1)),
-    MaxPooling2D(pool_size=(2, 2)),
-    Flatten(),
-    Dense(128, activation='relu'),
-    Dense(10, activation='softmax')
-])
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+# --- Example 1: @track decorator with MetricStore ---
 
-#log metrics to a file using the Tracker context manager
-with Tracker("mnist_cnn", tags=["keras", "mnist", "cnn"]) as tracker:
-    history = model.fit(
-        x_train, y_train,
-        validation_data=(x_test, y_test),
-        epochs=2,
-        batch_size=64,
-        callbacks=[tracker.get_keras_callback()]
-    )
+@track(name="demo_model", tags=["example", "v1"])
+def train_with_decorator():
+    metrics = MetricStore()
 
-'''
-Expected Result: 
-You should see a .json file saved in blackbox_logs/ 
-with training & validation metrics — automatically.
-'''
+    for epoch in range(5):
+        metrics.reset()
+        for batch in range(10):
+            loss = 1.0 / (epoch + 1) + random.uniform(-0.05, 0.05)
+            acc = 0.5 + epoch * 0.1 + random.uniform(-0.02, 0.02)
+            metrics.update({"loss": loss, "acc": acc}, n=32)
 
-#after training, visualise the most recent metrics
-import glob
-log_files = sorted(glob.glob("blackboxml_logs/metrics_*.json"), reverse=True)
-if log_files:
-    visualise_metrics(log_files[0], save_path="blackboxml_logs")
-else:
-    print("No metrics log files found.")
+        yield metrics.compute()
+
+
+# --- Example 2: Run context manager ---
+
+def train_with_context_manager():
+    with Run(name="demo_manual", tags=["example", "manual"]) as run:
+        for epoch in range(5):
+            loss = 1.0 / (epoch + 1) + random.uniform(-0.05, 0.05)
+            acc = 0.5 + epoch * 0.1 + random.uniform(-0.02, 0.02)
+            run.log({"epoch": epoch, "loss": loss, "acc": acc})
+
+
+if __name__ == "__main__":
+    print("running @track example...")
+    results = train_with_decorator()
+    print(f"logged {len(results)} epochs\n")
+
+    print("running Run context manager example...")
+    train_with_context_manager()
+    print("done\n")
+
+    print("check blackboxml_logs/ for saved runs, or run: bbml runs")

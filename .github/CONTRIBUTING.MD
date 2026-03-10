@@ -1,112 +1,35 @@
 # Contributing to BlackBoxML
 
-Thank you for your interest in contributing to **BlackBoxML**! 
-We welcome contributions from everyone — whether it's fixing bugs, improving documentation, or adding new features.  
-Your efforts help push BlackBoxML forward. 
+Contributions are welcome — bug fixes, docs improvements, new features.
 
----
+## Setup
 
-## How to Contribute
+```bash
+git clone https://github.com/stuartasiimwe7/blackboxml.git
+cd blackboxml
+python -m venv .venv && source .venv/bin/activate
+pip install -e .
+pip install pytest
+```
 
-### 1. Fork and Clone the Repository
+## Workflow
 
-- Fork the repository on GitHub.
-- Clone your fork to your local machine using one of the following methods:
-
-  - **HTTPS**:
-    ```bash
-    git clone https://github.com/stuartasiimwe7/blackboxml.git
-    ```
-
-  - **GitHub CLI**:
-    ```bash
-    gh repo clone stuartasiimwe7/blackboxml
-    ```
-
-  - **SSH**:
-    ```bash
-    git clone git@github.com:stuartasiimwe7/blackboxml.git
-    ```
-
-- Navigate into the project directory:
-  ```bash
-  cd blackboxml
-  ```
-
-### 2. Set Up Your Development Environment
-
-- Install dependencies:
-  ```bash
-  pip install -r requirements.txt
-  ```
-
-### 3. Create a Feature Branch
-
-- Create a new branch for your work:
-  ```bash
-  git checkout -b feature/your-feature-name
-  ```
-- Use descriptive branch names like `fix/logger-bug` or `feat/add-new-metrics`.
-
-### 4. Make Your Changes
-
-- Fix bugs, add features, or improve documentation.
-- Follow the existing coding style (PEP8) and best practices.
-
-### 5. Test Your Changes
-
-- Run tests to validate your work:
-  ```bash
-  pytest
-  ```
-
-### 6. Commit and Push
-
-- Stage and commit your changes:
-  ```bash
-  git add .
-  git commit -m "Fix: Correct metric calculation for accuracy"
-  git push origin feature/your-feature-name
-  ```
-
-### 7. Submit a Pull Request
-
-- Open a pull request (PR) against the `main` branch.
-- Provide a clear description of your changes and link any relevant issues.
-- Make sure all automated checks pass before submitting. Please follow the [Pull Request Template](../.github/PULL_REQUEST_TEMPLATE.MD).
-
-### 8. Participate in Code Review
-
-- Respond to feedback constructively and revise if needed.
-- Code reviews are here to make the project (and you) even better.
-
----
+1. Fork the repo and create a branch (`fix/logger-bug`, `feat/compare-runs`)
+2. Make your changes. Follow PEP 8, add type hints to public APIs.
+3. Run tests: `pytest tests/ -v`
+4. Commit with a clear message, push, and open a PR against `main`
 
 ## Guidelines
 
-### Code Style
+- Check existing issues before opening a new one
+- Open an issue first for major changes
+- Include tests for new functionality
+- Use the [pull request template](./PULL_REQUEST_TEMPLATE.MD)
 
-- Follow [PEP8](https://www.python.org/dev/peps/pep-0008/).
-- Write modular, readable, and well-documented code.
+## Reporting bugs
 
-### Reporting Issues
-
-- Check existing issues first.
-- Provide clear reproduction steps.
-- Use the [Bug Report Template](../.github/ISSUE_TEMPLATE/bug_report.md).
-
-### Adding New Features
-
-- Open an issue first if proposing major changes.
-- Include appropriate tests and documentation.
-
----
+Use the [bug report template](./ISSUE_TEMPLATE/bug_report.md). Include your Python version, blackboxml version, and steps to reproduce.
 
 ## License
 
-By contributing, you agree your work will be licensed under the same license as **BlackBoxML**.
-
----
-
-Thanks for being awesome,  
-**The BlackBoxML Team** 🖤
+By contributing, you agree your work will be licensed under the same [Apache 2.0 license](../LICENSE) as the project.
