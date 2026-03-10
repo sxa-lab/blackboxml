@@ -1,66 +1,101 @@
-import json
-import matplotlib.pyplot as plt
-import os
-from typing import Optional
+"""Single-run metric visualisation for BlackBoxML."""
+
 import logging
+import os
+
+import matplotlib.pyplot as plt
+
+from blackboxml.store import load_run
 
 logger = logging.getLogger("blackboxml")
 
-def visualise_metrics(filepath: str, save_path: Optional[str] = None, show: bool = True) -> None:
-    """
-    Visualise training/validation metrics from a JSON file.
+
+def visualise_run(
+    run_path: str,
+    save_path: str | None = None,
+    show: bool = True,
+) -> None:
+    """Plot training metrics for a single run.
+
+    Each metric (and its ``val_`` counterpart, when present) is rendered on
+    its own figure with epochs on the x-axis.
 
     Args:
-        filepath (str): Path to the metrics JSON file.
-        save_path (str, optional): Directory to save plots as image files. If None, plots are not saved.
-        show (bool, optional): If True, display plots interactively. If False, do not display.
-
-    The function will plot each metric (and its validation counterpart, if present) vs. epochs.
-    If save_path is provided, each plot is saved as <metric>_vs_epochs.png in that directory.
+        run_path: Path to a ``run.json`` file produced by the store module.
+        save_path: Directory in which to save plots as PNG files.  When
+            *None*, plots are not written to disk.
+        show: If *True*, display each figure interactively via
+            ``plt.show()``.  If *False*, close figures after optional saving.
     """
     try:
-        with open(filepath, 'r') as f:
-            metrics = json.load(f)
+        run_data = load_run(run_path)
     except FileNotFoundError:
-        logger.error(f"[BlackBoxML] Metrics file not found: {filepath}")
+        logger.error("Run file not found: %s", run_path)
         return
-    except json.JSONDecodeError:
-        logger.error(f"[BlackBoxML] Metrics file is not valid JSON: {filepath}")
-        return
-    except Exception as e:
-        logger.error(f"[BlackBoxML] Unexpected error reading metrics file: {e}")
+    except ValueError:
+        logger.error("Run file is not valid JSON: %s", run_path)
         return
 
-    try:
-        epochs = range(1, len(next(iter(metrics.values()))) + 1)
-    except Exception as e:
-        logger.error(f"[BlackBoxML] Error parsing metrics: {e}")
+    steps: list[dict] = run_data.get("steps", [])
+    if not steps:
+        logger.warning("No steps found in run: %s", run_path)
         return
 
-    if save_path:
+    run_name: str = run_data.get("name", "unnamed")
+
+    # Collect every metric key present across all steps (excluding "epoch").
+    all_keys: set[str] = set()
+    for step in steps:
+        all_keys.update(step.keys())
+    all_keys.discard("epoch")
+
+    if not all_keys:
+        logger.warning("No metric keys found in steps for run: %s", run_path)
+        return
+
+    # Build the x-axis from explicit epoch values or fall back to indices.
+    if "epoch" in steps[0]:
+        x_values: list[int | float] = [step["epoch"] for step in steps]
+    else:
+        x_values = list(range(len(steps)))
+
+    if save_path is not None:
         os.makedirs(save_path, exist_ok=True)
 
-    for key in metrics:
-        if 'val_' in key:  # plot validation metrics separately
-            continue
-        plt.figure()
+    # Determine which keys to iterate: skip val_ keys (they are paired with
+    # their training counterpart automatically).
+    primary_keys = sorted(k for k in all_keys if not k.startswith("val_"))
+
+    for metric in primary_keys:
+        val_metric = f"val_{metric}"
+        has_val = val_metric in all_keys
+
         try:
-            plt.plot(epochs, metrics[key], label=key)
-            val_key = f"val_{key}"
-            if val_key in metrics:
-                plt.plot(epochs, metrics[val_key], label=val_key)
-            plt.xlabel("Epochs")
-            plt.ylabel(key)
-            plt.title(f"{key} vs Epochs")
-            plt.legend()
-            plt.grid(True)
-            if save_path:
-                filename = os.path.join(save_path, f"{key}_vs_epochs.png")
-                plt.savefig(filename)
-                logger.info(f"[BlackBoxML] Saved plot: {filename}")
+            y_train = [step.get(metric) for step in steps]
+
+            fig, ax = plt.subplots()
+            ax.plot(x_values, y_train, label=metric)
+
+            if has_val:
+                y_val = [step.get(val_metric) for step in steps]
+                ax.plot(x_values, y_val, label=val_metric)
+
+            ax.set_xlabel("Epochs")
+            ax.set_ylabel(metric)
+            ax.set_title(f"{metric} vs Epochs \u2014 {run_name}")
+            ax.legend()
+            ax.grid(True)
+
+            if save_path is not None:
+                filename = os.path.join(save_path, f"{metric}_vs_epochs.png")
+                fig.savefig(filename)
+                logger.info("Saved plot: %s", filename)
+
             if show:
                 plt.show()
             else:
-                plt.close()
-        except Exception as e:
-            logger.error(f"[BlackBoxML] Error plotting metric '{key}': {e}")
+                plt.close(fig)
+
+        except Exception:
+            logger.exception("Error plotting metric '%s' for run: %s", metric, run_path)
+            plt.close("all")
