@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='blackboxml',
     version='0.5.1',
-    author='Stuart Asiimwe',
+    author='SxA Lab',
     author_email='stuartgabriel@ymail.com',
     description='ML experiment tracking. Local, lightweight, framework-agnostic.',
     long_description=open('README.md').read(),
