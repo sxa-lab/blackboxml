@@ -1,4 +1,4 @@
-[![PyPI version](https://badge.fury.io/py/blackboxml.svg)](https://badge.fury.io/py/blackboxml) [![Python Version](https://img.shields.io/pypi/pyversions/blackboxml.svg)](https://pypi.org/project/blackboxml/) [![Tests](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/test.yml/badge.svg)](https://github.com/stuartasiimwe7/blackboxml/actions/workflows/test.yml) [![Downloads](https://static.pepy.tech/badge/blackboxml)](https://pepy.tech/project/blackboxml)
+[![PyPI version](https://badge.fury.io/py/blackboxml.svg)](https://badge.fury.io/py/blackboxml) [![Python Version](https://img.shields.io/pypi/pyversions/blackboxml.svg)](https://pypi.org/project/blackboxml/) [![Tests](https://github.com/sxa-lab/blackboxml/actions/workflows/test.yml/badge.svg)](https://github.com/sxa-lab/blackboxml/actions/workflows/test.yml) [![Downloads](https://static.pepy.tech/badge/blackboxml)](https://pepy.tech/project/blackboxml)
 
 # blackboxml
 
@@ -113,6 +113,6 @@ See [Contributing Guidelines](./.github/CONTRIBUTING.MD) to get started. Bug rep
 
 [Apache License 2.0](./LICENSE)
 
-## Author
+## Maintainer
 
-[Stuart Asiimwe](https://github.com/stuartasiimwe7)
+Maintained by [SxA Lab](https://github.com/sxa-lab)

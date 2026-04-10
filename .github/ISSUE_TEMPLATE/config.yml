@@ -1,17 +1,17 @@
 blank_issues_enabled: false
 contact_links:
   - name: Ask a Question or Get Help
-    url: https://github.com/stuartasiimwe7/blackboxml/discussions
+    url: https://github.com/sxa-lab/blackboxml/discussions
     about: Start a discussion if you have general questions, need help, or want to brainstorm ideas.
 
   - name: Report a Security Vulnerability
-    url: https://github.com/stuartasiimwe7/blackboxml/security/policy
+    url: https://github.com/sxa-lab/blackboxml/security/policy
     about: Please report security vulnerabilities through the security policy page.
 
   - name: Read the Contribution Guidelines
-    url: https://github.com/stuartasiimwe7/blackboxml/blob/main/.github/CONTRIBUTING.MD
+    url: https://github.com/sxa-lab/blackboxml/blob/main/.github/CONTRIBUTING.MD
     about: Please read our contributing guidelines before submitting a new issue or pull request.
 
   - name: Review the Code of Conduct
-    url: https://github.com/stuartasiimwe7/blackboxml/blob/main/.github/CODE_OF_CONDUCT.MD
+    url: https://github.com/sxa-lab/blackboxml/blob/main/.github/CODE_OF_CONDUCT.MD
     about: Please make sure to adhere to our Code of Conduct while participating.

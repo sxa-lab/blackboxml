@@ -18,7 +18,7 @@ We pledge to make participation in this project a harassment-free experience for
 
 ## Enforcement
 
-Project maintainers may remove, edit, or reject contributions that violate this code. Instances of unacceptable behavior can be reported by [opening an issue](https://github.com/stuartasiimwe7/blackboxml/issues) or contacting the maintainer directly.
+Project maintainers may remove, edit, or reject contributions that violate this code. Instances of unacceptable behavior can be reported by [opening an issue](https://github.com/sxa-lab/blackboxml/issues) or contacting the maintainer directly.
 
 ## Attribution
 

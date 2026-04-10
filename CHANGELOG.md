@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.5.1] - 2026-04-10
+
+- Transferred repository to sxa-lab GitHub organisation
+- Fixed license classifier (was MIT, is Apache 2.0)
+- Added PyPI keywords and `project_urls` for discoverability
+- Updated all URLs across docs and community files
+
+---
+
 ## [0.5.0] - 2026-03-11
 ### Framework-Agnostic Tracking
 

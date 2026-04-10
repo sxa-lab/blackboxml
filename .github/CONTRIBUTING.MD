@@ -5,7 +5,7 @@ Contributions are welcome — bug fixes, docs improvements, new features.
 ## Setup
 
 ```bash
-git clone https://github.com/stuartasiimwe7/blackboxml.git
+git clone https://github.com/sxa-lab/blackboxml.git
 cd blackboxml
 python -m venv .venv && source .venv/bin/activate
 pip install -e .
