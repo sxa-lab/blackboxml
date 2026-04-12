@@ -1,0 +1,4 @@
+theme: jekyll-theme-architect
+title: blackboxml
+description: ML experiment tracking. Local, lightweight, framework-agnostic.
+show_downloads: true
