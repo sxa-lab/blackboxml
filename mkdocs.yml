@@ -1,0 +1,25 @@
+site_name: blackboxml
+site_description: ML experiment tracking. Local, lightweight, framework-agnostic.
+site_url: https://blackboxml.readthedocs.io
+repo_url: https://github.com/sxa-lab/blackboxml
+repo_name: sxa-lab/blackboxml
+
+theme:
+  name: material
+  palette:
+    primary: blue grey
+  features:
+    - navigation.sections
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Usage: usage.md
+  - CLI: cli.md
+  - What gets logged: logged.md
+  - Contributing: contributing.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
