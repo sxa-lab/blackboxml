@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.5.2] - 2026-04-28
+
+- Updated documentation with full API reference, usage examples for all frameworks, and visualisation guide
+- Added ReadTheDocs hosting with MkDocs Material theme
+- Added documentation link to PyPI project URLs
+- Updated package authorship and contact to SxA Lab
+
+---
+
 ## [0.5.1] - 2026-04-10
 
 - Transferred repository to sxa-lab GitHub organisation

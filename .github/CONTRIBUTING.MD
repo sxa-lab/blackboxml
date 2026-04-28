@@ -1,6 +1,6 @@
 # Contributing to BlackBoxML
 
-Contributions are welcome — bug fixes, docs improvements, new features.
+Bug reports, feature requests, and pull requests are welcome.
 
 ## Setup
 
@@ -11,6 +11,36 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e .
 pip install pytest
 ```
+
+For Keras callback development:
+
+```bash
+pip install -e ".[keras]"
+```
+
+## Running tests
+
+```bash
+pytest tests/ -v
+```
+
+## Building the package
+
+```bash
+python setup.py sdist bdist_wheel
+```
+
+## Project structure
+
+| File | Role |
+|------|------|
+| `__init__.py` | Public exports |
+| `tracker.py` | `@track` decorator and `Run` context manager |
+| `metrics.py` | `MetricStore` batch-to-epoch aggregation |
+| `store.py` | JSON persistence (`save_run`, `load_run`, `list_runs`, `delete_all_runs`) |
+| `callback.py` | `BlackBoxCallback` for Keras |
+| `visualiser.py` | `visualise_run()` plotting |
+| `cli.py` | `bbml` CLI built with Click |
 
 ## Workflow
 

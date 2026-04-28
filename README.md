@@ -1,17 +1,28 @@
-[![PyPI version](https://badge.fury.io/py/blackboxml.svg)](https://badge.fury.io/py/blackboxml) [![Python Version](https://img.shields.io/pypi/pyversions/blackboxml.svg)](https://pypi.org/project/blackboxml/) [![Tests](https://github.com/sxa-lab/blackboxml/actions/workflows/test.yml/badge.svg)](https://github.com/sxa-lab/blackboxml/actions/workflows/test.yml) [![Downloads](https://static.pepy.tech/badge/blackboxml)](https://pepy.tech/project/blackboxml)
+# blackboxml
 
-Works with PyTorch, Keras, scikit-learn, or plain Python.
+[![PyPI version](https://badge.fury.io/py/blackboxml.svg)](https://badge.fury.io/py/blackboxml)
+[![Python Version](https://img.shields.io/pypi/pyversions/blackboxml.svg)](https://pypi.org/project/blackboxml/)
+[![Tests](https://github.com/sxa-lab/blackboxml/actions/workflows/test.yml/badge.svg)](https://github.com/sxa-lab/blackboxml/actions/workflows/test.yml)
+[![Downloads](https://static.pepy.tech/badge/blackboxml)](https://pepy.tech/project/blackboxml)
+[![Docs](https://readthedocs.org/projects/blackboxml/badge/?version=latest)](https://blackboxml.readthedocs.io)
+
+ML experiment tracking. Local, lightweight, framework-agnostic.
+
+blackboxml logs your training runs as structured JSON. No accounts, no servers. It works with PyTorch, Keras, scikit-learn, or any Python training loop.
+
 
 ## Install
 
 ```bash
 pip install blackboxml
-pip install blackboxml[keras]  # optional TensorFlow support
+pip install blackboxml[keras]  #(opt) TensorFlow support
 ```
+
+Requires Python 3.10+.
 
 ## Usage
 
-### @track
+### @track decorator
 
 ```python
 from blackboxml import track, MetricStore
@@ -46,6 +57,19 @@ from blackboxml.callback import BlackBoxCallback
 
 model.fit(x_train, y_train, epochs=10,
           callbacks=[BlackBoxCallback(name="lstm_nlp", tags=["keras"])])
+```
+
+### scikit-learn
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score
+from blackboxml import Run
+
+with Run(name="rf_search", tags=["sklearn"]) as run:
+    for n in [50, 100, 200]:
+        scores = cross_val_score(RandomForestClassifier(n_estimators=n), X, y, cv=5)
+        run.log({"n_estimators": n, "accuracy": scores.mean()})
 ```
 
 ## CLI
@@ -88,13 +112,25 @@ Each run saves to `blackboxml_logs/<name>_<timestamp>/run.json`:
 
 Git commit, Python version, framework versions, and hostname are captured automatically.
 
+## Visualisation
+
+```python
+from blackboxml import visualise_run
+
+visualise_run("blackboxml_logs/resnet_cifar10_20260310_142201/run.json")
+visualise_run("blackboxml_logs/resnet_cifar10_20260310_142201/run.json",
+              save_path="plots/", show=False)
+```
+
 ## Releases
 
 | Version | Date | What changed |
 |---------|------|-------------|
-| [0.1.0](https://pypi.org/project/blackboxml/0.1.0/) | Apr 2025 | Initial release — Keras auto-logging, `visualise_metrics` |
+| [0.1.0](https://pypi.org/project/blackboxml/0.1.0/) | Apr 2025 | Initial release, Keras auto-logging, `visualise_metrics` |
 | [0.2.0](https://pypi.org/project/blackboxml/0.2.0/) | Jul 2025 | Type hints, logging module, error handling |
-| **0.5.0** | Mar 2026 | Framework-agnostic rewrite — `@track`, `Run`, `MetricStore`, `bbml` CLI |
+| [0.5.0](https://pypi.org/project/blackboxml/0.5.0/) | Mar 2026 | Framework-agnostic rewrite, `@track`, `Run`, `MetricStore`, `bbml` CLI |
+| [0.5.1](https://pypi.org/project/blackboxml/0.5.1/) | Apr 2026 | Migrated repo to sxa-lab, updated license classifier, added PyPI metadata |
+| **0.5.2** | Apr 2026 | Documentation update, ReadTheDocs, updated package authorship |
 
 ## Contributing
 

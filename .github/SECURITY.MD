@@ -2,7 +2,7 @@
 
 ## Reporting Vulnerabilities
 
-If you find a security vulnerability, **do not open a public issue**. Instead, contact the maintainer directly at stuartgabriel@ymail.com with:
+If you find a security vulnerability, **do not open a public issue**. Instead, contact the maintainer directly at sxalab.team@gmail.com with:
 
 - Description of the vulnerability
 - Steps to reproduce
