@@ -2,14 +2,15 @@ from setuptools import setup, find_packages
 
 setup(
     name='blackboxml',
-    version='0.5.1',
+    version='0.5.2',
     author='SxA Lab',
-    author_email='stuartgabriel@ymail.com',
+    author_email='sxalab.team@gmail.com',
     description='ML experiment tracking. Local, lightweight, framework-agnostic.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url='https://github.com/sxa-lab/blackboxml',
     project_urls={
+        'Documentation': 'https://blackboxml.readthedocs.io',
         'Source': 'https://github.com/sxa-lab/blackboxml',
         'Bug Tracker': 'https://github.com/sxa-lab/blackboxml/issues',
     },

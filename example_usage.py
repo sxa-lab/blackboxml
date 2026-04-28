@@ -1,4 +1,4 @@
-"""Example usage of blackboxml v0.5.0 — framework-agnostic experiment tracking."""
+"""Example usage of blackboxml v0.5.2 — framework-agnostic experiment tracking."""
 
 import random
 from blackboxml import track, Run, MetricStore
