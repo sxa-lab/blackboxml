@@ -1,10 +1,10 @@
-# blackboxml
+# [blackboxml](https://sxa-lab.github.io/blackboxml/)
 
 [![PyPI version](https://badge.fury.io/py/blackboxml.svg)](https://badge.fury.io/py/blackboxml)
 [![Python Version](https://img.shields.io/pypi/pyversions/blackboxml.svg)](https://pypi.org/project/blackboxml/)
 [![Tests](https://github.com/sxa-lab/blackboxml/actions/workflows/test.yml/badge.svg)](https://github.com/sxa-lab/blackboxml/actions/workflows/test.yml)
 [![Downloads](https://static.pepy.tech/badge/blackboxml)](https://pepy.tech/project/blackboxml)
-[![Docs](https://readthedocs.org/projects/blackboxml/badge/?version=latest)](https://blackboxml.readthedocs.io)
+[![ReadTheDocs](https://img.shields.io/readthedocs/blackboxml?label=ReadTheDocs)](https://blackboxml.readthedocs.io)
 
 ML experiment tracking. Local, lightweight, framework-agnostic.
 
@@ -121,6 +121,10 @@ visualise_run("blackboxml_logs/resnet_cifar10_20260310_142201/run.json")
 visualise_run("blackboxml_logs/resnet_cifar10_20260310_142201/run.json",
               save_path="plots/", show=False)
 ```
+
+## Documentation
+
+Full docs at [blackboxml.readthedocs.io](https://blackboxml.readthedocs.io), covering usage for all frameworks, API reference, CLI commands, run schema, and visualisation.
 
 ## Releases
 
